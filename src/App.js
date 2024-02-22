@@ -32,7 +32,7 @@ function App() {
         <HashRouter>
           <ChakraProvider>
             <Header setMessages={setMessages}></Header>
-
+            <h1>Hola Amigos</h1>
             <Routes>
               <Route path='/' element={<HomePage />}></Route>
               <Route path='/users-page' element={<UsersPage />}></Route>
