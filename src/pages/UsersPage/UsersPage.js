@@ -8,10 +8,7 @@ const UserPage = () => {
   React.useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_INFO}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch users');
-        }
+        const response = await fetch(`${process.env.REACT_APP_API_URL}`);
         const data = await response.json();
         setUsers(data);
       } catch (error) {
@@ -23,7 +20,7 @@ const UserPage = () => {
   }, []);
 
   return (
-    <Container maxWidth='980px'marginBottom='100px'>
+    <Container maxWidth='980px' marginBottom='100px'>
       <Heading as='h1' marginBottom='25px'>
         <FormattedMessage id='users:title' />
       </Heading>

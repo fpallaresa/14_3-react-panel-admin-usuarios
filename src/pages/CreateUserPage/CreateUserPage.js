@@ -34,13 +34,12 @@ const CreateUserPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [formData, setFormData] = React.useState(null);
   const { formatMessage } = useIntl();
   const [input, setInput] = React.useState('');
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_INFO, {
+      const response = await fetch(process.env.REACT_APP_API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,20 +51,13 @@ const CreateUserPage = () => {
         throw new Error('Failed to create user');
       }
 
-      setFormData(data);
+      window.location.href = '#/users-page';
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleInputChange = (e) => setInput(e.target.value);
-
-  const validateField = (value) => {
-    if (!value) {
-      return <FormattedMessage id='createUserPage.required' />;
-    }
-    return true;
-  };
+  const handleInputChange = (e) => setInput(event.target.value);
 
   return (
     <ChakraProvider theme={theme}>
@@ -86,7 +78,6 @@ const CreateUserPage = () => {
                   value: true,
                   message: <FormattedMessage id='createUserPage.required' />,
                 },
-                validate: (value) => validateField(value),
               })}
             />
             <FormLabel top='0' left='0' zIndex='2' position='absolute' backgroundColor='white' pointerEvents='none' mx='3' px='1' my='2' transformOrigin='left top'>
@@ -106,7 +97,6 @@ const CreateUserPage = () => {
                   value: true,
                   message: <FormattedMessage id='createUserPage.required' />,
                 },
-                validate: (value) => validateField(value),
               })}
             />
             <FormLabel top='0' left='0' zIndex='2' position='absolute' backgroundColor='white' pointerEvents='none' mx='3' px='1' my='2' transformOrigin='left top'>
@@ -126,13 +116,12 @@ const CreateUserPage = () => {
                   value: true,
                   message: <FormattedMessage id='createUserPage.required' />,
                 },
-                validate: (value) => validateField(value),
               })}
             />
             <FormLabel top='0' left='0' zIndex='2' position='absolute' backgroundColor='white' pointerEvents='none' mx='3' px='1' my='2' transformOrigin='left top'>
               <FormattedMessage id='createUserPage.email' />
             </FormLabel>
-            <FormErrorMessage>{errors.email && errors.username.message}</FormErrorMessage>
+            <FormErrorMessage>{errors.username ? errors.username.message : null}</FormErrorMessage>
           </FormControl>
           <FormControl variant='floating' isInvalid={errors.phone} id={formatMessage({ id: 'createUserPage.phone' })} marginBottom='20px' width='500px'>
             <Input
@@ -146,13 +135,12 @@ const CreateUserPage = () => {
                   value: true,
                   message: <FormattedMessage id='createUserPage.required' />,
                 },
-                validate: (value) => validateField(value),
               })}
             />
             <FormLabel top='0' left='0' zIndex='2' position='absolute' backgroundColor='white' pointerEvents='none' mx='3' px='1' my='2' transformOrigin='left top'>
               <FormattedMessage id='createUserPage.phone' />
             </FormLabel>
-            <FormErrorMessage>{errors.phone && errors.phone.message}</FormErrorMessage>
+            <FormErrorMessage>{errors.phone ? errors.phone.message : null}</FormErrorMessage>
           </FormControl>
           <FormControl variant='floating' isInvalid={errors.website} id={formatMessage({ id: 'createUserPage.website' })} marginBottom='20px' width='500px'>
             <Input
@@ -166,7 +154,6 @@ const CreateUserPage = () => {
                   value: true,
                   message: <FormattedMessage id='createUserPage.required' />,
                 },
-                validate: (value) => validateField(value),
               })}
             />
             <FormLabel top='0' left='0' zIndex='2' position='absolute' backgroundColor='white' pointerEvents='none' mx='3' px='1' my='2' transformOrigin='left top'>
@@ -178,12 +165,6 @@ const CreateUserPage = () => {
             <FormattedMessage id='createUserPage.submitButton' />
           </Button>
         </form>
-        <h2>Datos del formulario:</h2>
-        <p>name: {formData?.name}</p>
-        <p>username: {formData?.username}</p>
-        <p>email: {formData?.email}</p>
-        <p>phone: {formData?.phone}</p>
-        <p>website: {formData?.website}</p>
       </Container>
     </ChakraProvider>
   );

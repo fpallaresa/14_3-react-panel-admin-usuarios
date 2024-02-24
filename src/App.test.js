@@ -4,7 +4,7 @@ import App from './App';
 describe('App', () => {
   test('App', () => {
     render(<App />);
-    const title = screen.getByText('Hola Amigos');
+    const title = screen.getByText('Users!');
     expect(title).toBeInTheDocument();
   });
 });
